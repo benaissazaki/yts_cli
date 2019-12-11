@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
-# logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
 def get_movie_rating(movie_title_selector, yts_parser):
     """ Returns a movie's rating from its title's selector """
@@ -21,8 +21,7 @@ def get_movie_rating(movie_title_selector, yts_parser):
         
 def get_movie_titles():
     """ Returns a list of latest YTS movies added """
-    movies_titles = []
-    movie_scores = []
+    movies = {}
     movie_title_selector = 'div.home-content:nth-child(1) > div:nth-child(1) > div:nth-child({}) > div:nth-child({}) > div:nth-child(2) > a:nth-child(1)'
     try:
         yts_page = requests.get('https://yts.lt/')
@@ -33,9 +32,9 @@ def get_movie_titles():
         parser = BeautifulSoup(yts_page.text, 'html.parser')
         for i in [2,3]:
             for j in range(1,5):
-                movies_titles.append(parser.select(movie_title_selector.format(i,j))[0].text)
-                movie_scores.append(get_movie_rating(movie_title_selector.format(i,j), parser))
-    logging.debug(movie_scores)
-    return movies_titles
+                movie_title = parser.select(movie_title_selector.format(i,j))[0].text
+                movie_score = get_movie_rating(movie_title_selector.format(i,j), parser)
+                movies[movie_title] = float(movie_score)
+    return movies
 
 logging.debug(get_movie_titles())
