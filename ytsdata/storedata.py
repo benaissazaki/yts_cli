@@ -16,5 +16,3 @@ def write_data():
     for movie, rating in new_movies.items():
         movies_data[movie] = rating
     movies_data.to_csv('movies.csv')
-
-write_data()
