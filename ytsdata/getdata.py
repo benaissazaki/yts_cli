@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
-logging.disable(logging.CRITICAL)
+# logging.disable(logging.CRITICAL)
 
 def get_movie_rating(movie_title_selector, yts_parser):
     """ Returns a movie's rating from its title's selector """
