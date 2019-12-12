@@ -1,5 +1,9 @@
 import getdata as gd
 import pandas as pd
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
+# logging.disable(logging.CRITICAL)
 
 def read_existing_data():
     """ Returns a pandas Series either containing previous entries or empty """
@@ -16,3 +20,5 @@ def write_data():
     for movie, rating in new_movies.items():
         movies_data[movie] = rating
     movies_data.to_csv('movies.csv')
+
+logging.debug(write_data())
