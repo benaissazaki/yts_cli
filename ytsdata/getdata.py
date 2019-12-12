@@ -33,7 +33,7 @@ def get_movie_category(movie_title_selector, yts_parser):
         category = parser.select(movie_category_selector)[0].text
         return category       
 
-def get_movie_titles():
+def get_movie_data():
     """ Returns a list of latest YTS movies added """
     movies = {}
     movie_title_selector = 'div.home-content:nth-child(1) > div:nth-child(1) > div:nth-child({}) > div:nth-child({}) > div:nth-child(2) > a:nth-child(1)'
@@ -52,4 +52,4 @@ def get_movie_titles():
                 movies[movie_title] = [float(movie_score), movie_category]
     return movies
 
-logging.debug(get_movie_titles())
+logging.debug(get_movie_data())

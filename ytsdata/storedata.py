@@ -16,7 +16,7 @@ def read_existing_data():
 def write_data():
     """ Writes the new entries into the 'movies.csv' file """
     movies_data = read_existing_data()
-    new_movies = gd.get_movie_titles()
+    new_movies = gd.get_movie_data()
     for movie, rating in new_movies.items():
         if movie not in movies_data['Movie'].values:
             new_row = [movie, rating]
