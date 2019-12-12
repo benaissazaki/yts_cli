@@ -18,7 +18,21 @@ def get_movie_rating(movie_title_selector, yts_parser):
         parser = BeautifulSoup(movie_page.text, 'html.parser')
         rating = parser.select(movie_rating_selector)[0].text
         return rating
-        
+
+def get_movie_category(movie_title_selector, yts_parser):
+    """ Returns a movie's category from its title's selector """
+    movie_page_link = yts_parser.select(movie_title_selector)[0]['href']
+    try:
+        movie_page = requests.get(movie_page_link)
+    except:
+        print('Cannot access to yts.lt. Please check your connexion.')
+        return None
+    else:
+        movie_category_selector = 'div.hidden-xs:nth-child(1) > h2:nth-child(3)'
+        parser = BeautifulSoup(movie_page.text, 'html.parser')
+        category = parser.select(movie_category_selector)[0].text
+        return category       
+
 def get_movie_titles():
     """ Returns a list of latest YTS movies added """
     movies = {}
