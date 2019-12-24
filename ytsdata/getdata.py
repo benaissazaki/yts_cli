@@ -15,6 +15,18 @@ def get_movie_page(movie_title_selector, yts_parser):
         return None
     return movie_page
 
+def get_movie_urls(movie_page):
+    """ Returns a movie's download URLs as dictionaries {'quality': 'link'} from its page """
+    if movie_page:
+        movie_url_selector ='p.hidden-xs:nth-child(2) a'
+        parser = BeautifulSoup(movie_page.text, 'html.parser')
+        urls = parser.select(movie_url_selector)
+        links = {}
+        for url in urls:
+            links[url.text] = url['href']
+        return links
+    return None
+
 def get_movie_rating(movie_page):
     """ Returns a movie's rating from its page """
     if movie_page:
@@ -50,7 +62,8 @@ def get_movie_data():
                 movie_page = get_movie_page(movie_title_selector.format(i,j),parser)
                 movie_score = get_movie_rating(movie_page)
                 movie_category = get_movie_category(movie_page)
-                movies[movie_title] = [float(movie_score), movie_category]
+                movie_urls = get_movie_urls(movie_page)
+                movies[movie_title] = [float(movie_score), movie_category, movie_urls]
     return movies
 
 logging.debug(get_movie_data())
