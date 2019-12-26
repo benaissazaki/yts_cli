@@ -66,4 +66,5 @@ def get_movie_data():
                 movies[movie_title] = [float(movie_score), movie_category, movie_urls]
     return movies
 
-logging.debug(get_movie_data())
+if __name__ == "__main__":
+    logging.debug(get_movie_data())
