@@ -33,6 +33,9 @@ def get_movie_rating(movie_page):
         movie_rating_selector = 'div.rating-row:nth-child(2) > span:nth-child(2)'
         parser = BeautifulSoup(movie_page.text, 'html.parser')
         rating = parser.select(movie_rating_selector)[0].text
+        if '%' in rating:
+            movie_rating_selector = 'div.rating-row:nth-child(3) > span:nth-child(2)'
+            rating = parser.select(movie_rating_selector)[0].text
         return rating
     return None
 
