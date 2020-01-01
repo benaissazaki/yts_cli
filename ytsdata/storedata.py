@@ -4,7 +4,7 @@ import logging
 
 
 def read_existing_data():
-    """ Returns a pandas Series either containing previous entries or empty """
+    """ Returns a pandas Dataframe either containing previous entries or empty """
     try:
         movies_data = pd.read_csv('movies.csv', index_col=0)
     except:
@@ -27,7 +27,6 @@ def write_data():
     movies_data.to_csv('movies.csv')
 
 if __name__ == "__main__":
-    
     logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
     # logging.disable(logging.CRITICAL)
     logging.debug(write_data())
