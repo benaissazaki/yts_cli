@@ -2,9 +2,6 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
-# logging.disable(logging.CRITICAL)
-
 def get_movie_page(movie_title_selector, yts_parser):
     """ Returns a movie's page """
     movie_page_link = yts_parser.select(movie_title_selector)[0]['href']
@@ -70,4 +67,6 @@ def get_movie_data():
     return movies
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
+    # logging.disable(logging.CRITICAL)
     logging.debug(get_movie_data())

@@ -2,8 +2,6 @@ import getdata as gd
 import pandas as pd
 import logging
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
-# logging.disable(logging.CRITICAL)
 
 def read_existing_data():
     """ Returns a pandas Series either containing previous entries or empty """
@@ -28,4 +26,8 @@ def write_data():
             movies_data.index += 1
     movies_data.to_csv('movies.csv')
 
-logging.debug(write_data())
+if __name__ == "__main__":
+    
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s-%(levelname)s-%(message)s')
+    # logging.disable(logging.CRITICAL)
+    logging.debug(write_data())
