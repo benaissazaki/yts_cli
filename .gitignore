@@ -1,5 +1,7 @@
 ytsdata/__pycache__/
 ytsdata/movies.csv
+ytsdata/getdata.pyc
+ytsdata/storedata.pyc
 movies.csv
 ytsdata/geckodriver.log
 geckodriver.log
