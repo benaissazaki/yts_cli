@@ -1,6 +1,5 @@
 import requests
 
-
 class YtsAPI():
     @staticmethod
     def list_movies(limit=20, page=1, quality="",
@@ -25,7 +24,7 @@ class YtsAPI():
         return request["data"]
 
     @staticmethod
-    def movie_detail(movie_id, with_images=false, with_cast=false):
+    def movie_detail(movie_id, with_images=False, with_cast=False):
         request = requests.get(
             f"https://yts.mx/api/v2/movie_details.json?movie_id={movie_id}&with_images={with_images}&with_cast={with_cast}"
         ).json()
@@ -47,3 +46,13 @@ class YtsAPI():
         ).json()
         assert request["status"] == 'ok'
         return request["data"]
+
+    @staticmethod
+    def display_list(limit=20, page=1, quality="",
+                    minimum_rating=0, query_term="", genre="",
+                    sort_by="date_added", order_by="desc", with_rt_ratings=False):
+        for movie in YtsAPI.list_movies(limit, page, quality, minimum_rating, query_term, genre, sort_by, order_by, with_rt_ratings)["movies"]:
+                print(f"{movie['id']} \t {movie['title']} \n {movie['rating']} \t {movie['genres']}\n")
+
+if __name__ == "__main__":
+    YtsAPI.display_list()
