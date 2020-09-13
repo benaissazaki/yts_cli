@@ -51,8 +51,15 @@ class YtsAPI():
     def display_list(limit=20, page=1, quality="",
                     minimum_rating=0, query_term="", genre="",
                     sort_by="date_added", order_by="desc", with_rt_ratings=False):
-        for movie in YtsAPI.list_movies(limit, page, quality, minimum_rating, query_term, genre, sort_by, order_by, with_rt_ratings)["movies"]:
-                print(f"{movie['id']} \t {movie['title']} \n {movie['rating']} \t {movie['genres']}\n")
+
+        p = page
+        while True:
+            for movie in YtsAPI.list_movies(limit, p, quality, minimum_rating, query_term, genre, sort_by, order_by, with_rt_ratings)["movies"]:
+                    print(f"{movie['id']} \t {movie['title']} \n {movie['rating']} \t {movie['genres']}\n")
+            p += 1
+            cont = input(f"Do you want to see page number {p}? (y/n) ")
+            if cont == "n":
+                break
 
 if __name__ == "__main__":
     YtsAPI.display_list()
