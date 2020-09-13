@@ -3,6 +3,7 @@ import sys
 
 commands = {
     "list": {"fct": YtsAPI.display_list, "arg": False},
+    "detail": {"fct": YtsAPI.display_detail, "arg": True},
     'exit': {"fct": sys.exit, "arg": False}
 }
 

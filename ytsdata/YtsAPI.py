@@ -29,7 +29,7 @@ class YtsAPI():
             f"https://yts.mx/api/v2/movie_details.json?movie_id={movie_id}&with_images={with_images}&with_cast={with_cast}"
         ).json()
         assert request["status"] == 'ok'
-        return request["data"]
+        return request["data"]["movie"]
 
     @staticmethod
     def movie_suggestions(movie_id):
@@ -60,6 +60,11 @@ class YtsAPI():
             cont = input(f"Do you want to see page number {p}? (y/n) ")
             if cont == "n":
                 break
+
+    @staticmethod
+    def display_detail(id):
+        movie = YtsAPI.movie_detail(id)
+        print(f"\n\nId: {movie['id']}\nTitle: {movie['title']}({movie['year']})\nRating: {movie['rating']}\nGenres: {movie['genres']}\nLanguage: {movie['language']}\nDescription: {movie['description_full']}\n\n")
 
 if __name__ == "__main__":
     YtsAPI.display_list()
