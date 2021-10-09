@@ -3,10 +3,10 @@
 import yts_api
 
 if __name__ == '__main__':
-    query = ''
+    QUERY = ''
 
     while True:
-        query = input('\n* Search for a movie: ')
-        results = yts_api.list_movies(query_term=query)['movies']
+        QUERY = input('\n* Search for a movie: ')
+        results = yts_api.list_movies(query_term=QUERY)['movies']
         for r in results:
             print(f"{r['id']}-{r['title']}")
