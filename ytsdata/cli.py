@@ -1,4 +1,5 @@
 from PyInquirer import prompt
+from yts_api import list_movies
 
 def run():
     main_prompt = {
@@ -22,5 +23,27 @@ def run():
         
 
 def treat_action(action):
-    pass
+    switch = {
+        'Search a movie': search
+    }
 
+    instruction = switch.get(action)
+    instruction()
+
+
+def search():
+    search_prompt = {
+        'type': 'input',
+        'name': 'query',
+        'message': 'Which movie are you looking for?'
+    }
+    
+    query = prompt(search_prompt)['query']
+    results = list_movies(query_term=query)
+    if results['movie_count'] == 0:
+        print('\nNo movie found.\n')
+        return
+    print()
+    for movie in results['movies']:
+        print(f"#{movie['id']}-{movie['title']}")
+    print()
