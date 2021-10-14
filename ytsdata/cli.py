@@ -1,16 +1,18 @@
+''' All command line prompts and actions '''
 from PyInquirer import prompt
-from yts_api import list_movies
+import requests
+from yts_api import list_movies, movie_detail
+
 
 def run():
+    ''' Keep prompting the user about which action to take'''
     main_prompt = {
         'type': 'list',
         'name': 'action',
         'message': 'What do you want to do?',
         'choices': [
             'Search a movie',
-            'Get a movie\'s details',
-            'Get suggestions',
-            'Get reviews',
+            'Download a movie',
             'Exit'
         ]
     }
@@ -20,11 +22,13 @@ def run():
         if action == 'Exit':
             return 0
         treat_action(action)
-        
+
 
 def treat_action(action):
+    ''' Call the right function depending on the user's input '''
     switch = {
-        'Search a movie': search
+        'Search a movie': search,
+        'Download a movie': download
     }
 
     instruction = switch.get(action)
@@ -32,12 +36,13 @@ def treat_action(action):
 
 
 def search():
+    ''' Prompt the user to search for a movie using a keyword and display results '''
     search_prompt = {
         'type': 'input',
         'name': 'query',
         'message': 'Which movie are you looking for?'
     }
-    
+
     query = prompt(search_prompt)['query']
     results = list_movies(query_term=query)
     if results['movie_count'] == 0:
@@ -45,5 +50,30 @@ def search():
         return
     print()
     for movie in results['movies']:
-        print(f"#{movie['id']}-{movie['title']}")
+        print(f"#{movie['id']}-{movie['title']}({movie['year']})")
     print()
+
+def download():
+    ''' Prompt the user to enter a movie_id and download the corresponding movie'''
+    download_prompt = {
+        'type': 'input',
+        'name': 'movie_id',
+        'message': 'Which movie do  you want to download (Enter id)'
+    }
+
+    movie_id = prompt(download_prompt)['movie_id']
+
+    movie = movie_detail(movie_id)
+    if not movie:
+        print('\nNo corresponding movie found.\n')
+        return None
+    movie = movie['movie']
+
+    # TODO: Prompt the user about which quality to download depending on the available ones
+
+    link = movie['torrents'][0]['url']
+    file = requests.get(link, allow_redirects=True)
+
+    open(f"{movie['title']}.torrent", 'wb').write(file.content)
+
+    print(f"\n{movie['title']}.torrent saved successfully!\n")
