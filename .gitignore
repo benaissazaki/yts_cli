@@ -5,3 +5,4 @@ ytsdata/storedata.pyc
 movies.csv
 ytsdata/geckodriver.log
 geckodriver.log
+*.torrent
