@@ -44,7 +44,10 @@ def search():
     }
 
     query = prompt(search_prompt)['query']
+
+    # TODO: Catch possible exceptions
     results = list_movies(query_term=query)
+
     if results['movie_count'] == 0:
         print('\nNo movie found.\n')
         return
@@ -63,6 +66,7 @@ def download():
 
     movie_id = prompt(download_prompt)['movie_id']
 
+    # TODO: Catch possible exceptions
     movie = movie_detail(movie_id)
     if not movie:
         print('\nNo corresponding movie found.\n')
@@ -76,4 +80,4 @@ def download():
 
     open(f"{movie['title']}.torrent", 'wb').write(file.content)
 
-    print(f"\n{movie['title']}.torrent saved successfully!\n")
+    print(f"\n{movie['title']}.torrent saved successfully! Open it with a torrent client (BitTorrent, μTorrent...) to download the movie \n")
